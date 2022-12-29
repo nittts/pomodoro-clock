@@ -29,12 +29,19 @@ function Clock() {
     getSingleQuote().then((res) => {
       dispatch(setQuote(res));
     });
+
+    document.title = "Pomodoro Clock |" + sessionState.duration.goal / 60 + ":00";
   }
 
   useEffect(() => {
     const timing = setInterval(() => {
       if (clockActive) {
         dispatch(setDuration({ ...sessionState.duration, current: sessionState.duration.current - 1 }));
+        document.title =
+          "Pomodoro Clock |" +
+          `${Math.floor(sessionState.duration.current / 60)}:${
+            Math.floor(sessionState.duration.current % 60) === 0 ? "00" : Math.floor(sessionState.duration.current % 60)
+          }`;
       }
     }, 1000);
 
